@@ -1,16 +1,20 @@
 class Figure():
-    def __init__(self, typeStr, type, posX, posY, colorBlack):
+    def __init__(self, type, posX, posY, colorBlack):
         self.figureType = type
-        self.figureTypeString = typeStr
+        self.figureTypeString = figureTypes[type]
         self.positionX = posX
         self.positionY = posY
         self.colorBlack = colorBlack
 
-# Types:
-#     Pawn = 0
-#     Rook = 1
-#     Knight = 2
-#     Bishop = 3
-#     Queen = 4
-#     King = 5
+    def moveFigure(self, newPosX, newPosY):
+        self.positionX = newPosX
+        self.positionY = newPosY
 
+figureTypes = {
+    0: 'pawn',
+    1: 'rook',
+    2: 'knight',
+    3: 'bishop',
+    4: 'queen',
+    5: 'king'
+}
