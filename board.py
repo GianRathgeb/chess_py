@@ -1,5 +1,6 @@
 from tabulate import tabulate
 from figure import Figure
+import copy
 
 class Board():
     def __init__(self, boardWidth=8, boardHight=8):
@@ -10,14 +11,14 @@ class Board():
             self.board.append([])
             height = 0
             while height < self.boardHight:
-                self.board[width].append('')
+                self.board[width].append('.')
                 height += 1
 
     def setupBoard(self):
         for i in range(0, self.boardWith):
             self.board[1][i] = Figure(0, i, 1, True)
         for i in range(0, self.boardWith):
-            self.board[self.boardHight - 2][i] = Figure(0, i, 1, False)
+            self.board[self.boardHight - 2][i] = Figure(0, i, 6, False)
         for i in range(2):
             if i == 0:
                 blackColor = True
@@ -43,8 +44,21 @@ class Board():
                 try:
                     arrTemp[i].append(self.board[i][j].figureTypeString)
                 except:
-                    arrTemp[i].append('')
+                    arrTemp[i].append('.')
         print(tabulate(arrTemp))
 
     def removeFigure(self, posX, posY):
-        self.board[posX][posY] = ''
+        print(f"remove y {posY}, x {posX}: {self.board[posY][posX]}")
+        # delete the object
+        self.board[posY][posX] = 'terst'
+
+    def moveFigure(self, figure, newPosX, newPosY):
+        if type(figure) == Figure:
+            # TODO check if figure can move
+            # clear field, even if there are no figures
+            self.removeFigure(newPosX, newPosY)
+            print(f"test y: {figure.positionY}, x: {figure.positionX}")
+            self.board[newPosY][newPosX] = copy.copy(self.board[figure.positionY][figure.positionX])
+            self.removeFigure(figure.positionX, figure.positionY)
+            self.board[newPosY][newPosX].positionX = newPosX
+            self.board[newPosY][newPosX].positionY = newPosY
