@@ -10,6 +10,21 @@ class Figure():
         self.positionX = newPosX
         self.positionY = newPosY
 
+    def canMoveTo(self, newPosX, newPosY):
+        if self.figureType == 0:
+            return True
+        elif self.figureType == 1:
+            return True
+        elif self.figureType == 2:
+            return True
+        elif self.figureType == 3:
+            return True
+        elif self.figureType == 4:
+            return True
+        elif self.figureType == 5:
+            return True
+
+
 figureTypes = {
     0: 'pawn',
     1: 'rook',

@@ -44,21 +44,40 @@ class Board():
                 try:
                     arrTemp[i].append(self.board[i][j].figureTypeString)
                 except:
-                    arrTemp[i].append('.')
+                    arrTemp[i].append(self.board[i][j])
         print(tabulate(arrTemp))
 
     def removeFigure(self, posX, posY):
-        print(f"remove y {posY}, x {posX}: {self.board[posY][posX]}")
         # delete the object
-        self.board[posY][posX] = 'terst'
+        self.board[posY][posX] = '.'
+
+    def isCheck(self, figure, newPosX, newPosY):
+        return False
+
+    def validateMove(self, figure, newPosX, newPosY):
+        if figure.canMoveTo(newPosX, newPosY):
+            if type(self.board[newPosY][newPosX] == 'str') or self.board[newPosY][newPosX].colorBlack == figure.colorBlack:
+                #! Do nothing
+                return False
+            else:
+                # Validate if user is check
+                if self.isCheck(figure, newPosX, newPosY):
+                    return False
+                else:
+                    return True
+        else:
+            return False
 
     def moveFigure(self, figure, newPosX, newPosY):
         if type(figure) == Figure:
-            # TODO check if figure can move
-            # clear field, even if there are no figures
-            self.removeFigure(newPosX, newPosY)
-            print(f"test y: {figure.positionY}, x: {figure.positionX}")
-            self.board[newPosY][newPosX] = copy.copy(self.board[figure.positionY][figure.positionX])
-            self.removeFigure(figure.positionX, figure.positionY)
-            self.board[newPosY][newPosX].positionX = newPosX
-            self.board[newPosY][newPosX].positionY = newPosY
+            if self.validateMove(figure, newPosX, newPosY):
+                # clear field, even if there are no figures
+                self.removeFigure(newPosX, newPosY)
+                self.board[newPosY][newPosX] = copy.copy(self.board[figure.positionY][figure.positionX])
+                self.removeFigure(figure.positionX, figure.positionY)
+                self.board[newPosY][newPosX].positionX = newPosX
+                self.board[newPosY][newPosX].positionY = newPosY
+            else:
+                print('Make a valid move')
+        else:
+            print('Choose a figure')
