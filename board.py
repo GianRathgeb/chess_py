@@ -55,18 +55,18 @@ class Board():
         return False
 
     def validateMove(self, figure, newPosX, newPosY):
-        if figure.canMoveTo(newPosX, newPosY):
-            if type(self.board[newPosY][newPosX] == 'str') or self.board[newPosY][newPosX].colorBlack == figure.colorBlack:
-                #! Do nothing
-                return False
-            else:
-                # Validate if user is check
-                if self.isCheck(figure, newPosX, newPosY):
-                    return False
-                else:
-                    return True
+        canMove = False
+
+        if not isinstance(self.board[newPosY][newPosX], str):
+            if not self.board[newPosY][newPosX].colorBlack == figure.colorBlack:
+                if not self.isCheck(figure, newPosX, newPosY):
+                    # Validate if user is in check after move
+                    canMove = True
         else:
-            return False
+            if not self.isCheck(figure, newPosX, newPosY):
+                    # Validate if user is in check after move
+                    canMove = True
+        return canMove
 
     def moveFigure(self, figure, newPosX, newPosY):
         if type(figure) == Figure:
