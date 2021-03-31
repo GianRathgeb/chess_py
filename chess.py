@@ -9,8 +9,6 @@ def validateMove(figure, posX, posY):
 
 
 
-
-
 chess = board.Board()
 chess.setupBoard()
 chess.printBoard()
